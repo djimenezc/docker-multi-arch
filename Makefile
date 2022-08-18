@@ -14,5 +14,11 @@ docker-build-multi-arch:
 
 podman-build-multi-arch:
 	podman buildx build \
-	--platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
-	--tag djimenezc/multiarch-example:buildx-latest .
+	--platform=linux/amd64 \
+	--tag docker.io/djimenezc/multiarch-example:podman-buildx-latest .
+	podman push docker.io/djimenezc/multiarch-example:podman-buildx-latest
+
+podman-build:
+	podman build \
+	--tag docker.io/djimenezc/multiarch-example:podman .
+	podman push docker.io/djimenezc/multiarch-example:podman
