@@ -21,11 +21,12 @@ docker-build-multi-arch:
     --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
     -t djimenezc/multiarch-example:buildx-latest .
 
-podman-build-multi-arch:
+podman-build-amd64:
 	podman buildx build \
+	--build-arg ARM=amd64 \
 	--platform=linux/amd64 \
 	-t docker.io/djimenezc/multiarch-example:podman-buildx-latest .
-	podman push docker.io/djimenezc/multiarch-example:podman-buildx-latest
+	podman push docker.io/djimenezc/multiarch-example:podman
 
 podman-build:
 	podman build \
@@ -33,3 +34,5 @@ podman-build:
 	-t docker.io/djimenezc/multiarch-example:podman .
 	podman push docker.io/djimenezc/multiarch-example:podman
 
+podman-curl-run:
+	docker run djimenezc/multiarch-example:podman https://www.example.com
