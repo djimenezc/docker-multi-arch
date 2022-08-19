@@ -25,7 +25,7 @@ podman-build-amd64:
 	podman buildx build \
 	--build-arg ARM=amd64 \
 	--platform=linux/amd64 \
-	-t docker.io/djimenezc/multiarch-example:podman-buildx-latest .
+	-t docker.io/djimenezc/multiarch-example:podman .
 	podman push docker.io/djimenezc/multiarch-example:podman
 
 podman-build:
