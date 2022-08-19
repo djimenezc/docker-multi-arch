@@ -14,7 +14,7 @@ docker-destroy-builder:
 docker-build-multi-arch:
 	docker buildx build \
 	--builder=mybuilder \
-	--load \
+	--push \
     --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
     -t djimenezc/multiarch-example:buildx-latest .
 
