@@ -29,7 +29,7 @@ podman-build-multi-arch:
 
 podman-build:
 	podman build \
-	--build-arg arm64 \
+	--build-arg ARM=arm64 \
 	-t docker.io/djimenezc/multiarch-example:podman .
 	podman push docker.io/djimenezc/multiarch-example:podman
 
