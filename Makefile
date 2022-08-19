@@ -2,8 +2,11 @@
 docker-build-builder:
 	docker buildx create --name mybuilder --driver-opt network=host --use
 	docker buildx inspect --bootstrap
-	docker run -it --rm --privileged tonistiigi/binfmt --install all
+	$(MAKE) docker-install-qemu-emulator
 	$(MAKE) docker-build-ls
+
+docker-install-qemu-emulator:
+	docker run -it --rm --privileged tonistiigi/binfmt --install all
 
 docker-build-ls:
 	docker buildx ls
@@ -26,8 +29,7 @@ podman-build-multi-arch:
 
 podman-build:
 	podman build \
+	--build-arg arm64 \
 	-t docker.io/djimenezc/multiarch-example:podman .
 	podman push docker.io/djimenezc/multiarch-example:podman
 
-docker-install-qemu-emulator:
-	docker run -it --rm --privileged tonistiigi/binfmt --install all
