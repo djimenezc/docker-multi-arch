@@ -35,4 +35,12 @@ podman-build:
 	podman push docker.io/djimenezc/multiarch-example:podman
 
 podman-curl-run:
-	docker run djimenezc/multiarch-example:podman https://www.example.com
+	podman run -rm djimenezc/multiarch-example:podman https://www.example.com
+
+podman-get-arch-arm:
+	podman run --rm --entrypoint=/usr/bin/arch \
+	djimenezc/multiarch-example:podman
+
+podman-get-arch-amd64:
+	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch \
+	djimenezc/multiarch-example:podman
