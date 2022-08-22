@@ -21,6 +21,7 @@ docker-build-multi-arch:
     --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
     -t djimenezc/multiarch-example:buildx-latest .
 
+# PODMAN
 podman-build-amd64:
 	podman buildx build \
 	--build-arg ARM=amd64 \
