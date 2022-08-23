@@ -24,14 +24,15 @@ docker-build-multi-arch:
 # PODMAN
 podman-build-amd64:
 	podman buildx build \
-	--build-arg ARM=amd64 \
+	--build-arg ARC=amd64 \
 	--platform=linux/amd64 \
 	-t docker.io/djimenezc/multiarch-example:podman .
 	podman push docker.io/djimenezc/multiarch-example:podman
 
 podman-build:
 	podman build \
-	--build-arg ARM=arm64 \
+	--build-arg ARCH=arm64 \
+	--platform=linux/arm64 \
 	-t docker.io/djimenezc/multiarch-example:podman .
 	podman push docker.io/djimenezc/multiarch-example:podman
 
