@@ -1,3 +1,4 @@
+export PLATFORM_ARCH=linux/amd64,linux/arm64
 
 docker-build-builder:
 	docker buildx create --name mybuilder --driver-opt network=host --use
@@ -24,25 +25,35 @@ docker-build-multi-arch:
 # PODMAN
 podman-build-amd64:
 	podman buildx build \
-	--build-arg ARC=amd64 \
 	--platform=linux/amd64 \
-	-t docker.io/djimenezc/multiarch-example:podman .
-	podman push docker.io/djimenezc/multiarch-example:podman
+	-t docker.io/djimenezc/multiarch-example:podman-amd64 .
+	podman push docker.io/djimenezc/multiarch-example:podman-amd64
 
 podman-build:
 	podman build \
-	--build-arg ARCH=arm64 \
 	--platform=linux/arm64 \
-	-t docker.io/djimenezc/multiarch-example:podman .
-	podman push docker.io/djimenezc/multiarch-example:podman
+	-t docker.io/djimenezc/multiarch-example:podman-arm64 .
+	podman push docker.io/djimenezc/multiarch-example:podman-arm64
+
+podman-build-multi-arch:
+	buildah build --jobs=2 --platform=${PLATFORM_ARCH} --manifest shazam .
+	skopeo inspect --raw containers-storage:localhost/shazam | \
+          jq '.manifests[].platform.architecture'
+	buildah tag localhost/shazam docker.io/djimenezc/multiarch-example:podman-multiarch
+	buildah manifest rm localhost/shazam
+	buildah manifest push --all docker.io/djimenezc/multiarch-example:podman-multiarch docker://docker.io/djimenezc/multiarch-example:podman-multiarch
+
+# Testing podman images
 
 podman-curl-run:
-	podman run --rm djimenezc/multiarch-example:podman https://www.example.com
+	podman run --rm docker.io/djimenezc/multiarch-example:podman-arm64 https://www.example.com
 
 podman-get-arch-arm:
-	podman run --rm --entrypoint=/usr/bin/arch \
-	djimenezc/multiarch-example:podman
+	podman run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-arm64
 
 podman-get-arch-amd64:
-	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch \
-	djimenezc/multiarch-example:podman
+	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-amd64
+
+podman-get-arch-multiarch:
+	podman run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
+	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
