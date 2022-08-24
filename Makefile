@@ -22,6 +22,12 @@ docker-build-multi-arch:
     --platform linux/arm/v7,linux/arm64/v8,linux/amd64 \
     -t djimenezc/multiarch-example:buildx-latest .
 
+# Testing docker images
+docker-get-arch-multiarch-with-docker:
+	docker run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:buildx-latest
+	docker run --rm --platform linux/arm64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:buildx-latest
+	docker run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:buildx-latest
+
 # PODMAN
 podman-build-amd64:
 	podman buildx build \
