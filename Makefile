@@ -55,9 +55,11 @@ podman-get-arch-amd64:
 	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-amd64
 
 podman-get-arch-multiarch:
+	podman run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
 	podman run --rm --platform linux/arm64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
 	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
 
 podman-get-arch-multiarch-with-docker:
+	docker run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
 	docker run --rm --platform linux/arm64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
 	docker run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
