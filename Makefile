@@ -46,14 +46,14 @@ podman-build-multi-arch:
 # Testing podman images
 
 podman-curl-run:
-	podman run --rm docker.io/djimenezc/multiarch-example:podman-arm64 https://www.example.com
+	podman run --rm docker.io/djimenezc/multiarch-example:podman-multiarch https://www.example.com
 
-podman-get-arch-arm:
+podman-get-arch-arm64:
 	podman run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-arm64
 
 podman-get-arch-amd64:
 	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-amd64
 
 podman-get-arch-multiarch:
-	podman run --rm --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
+	podman run --rm --platform linux/arm64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
 	podman run --rm --platform linux/amd64 --entrypoint=/usr/bin/arch docker.io/djimenezc/multiarch-example:podman-multiarch
